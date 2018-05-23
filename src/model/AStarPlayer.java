@@ -8,7 +8,7 @@ import java.util.Set;
 
 import model.PuzzleGame.action;
 
-public class RandomPlayer extends Player{
+public class AStarPlayer extends Player{
 
 	
 	@Override

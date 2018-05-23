@@ -6,7 +6,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
 
-
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -29,11 +28,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
+import model.AStarPlayer;
+import model.Player;
 import model.PuzzleGame;
 import model.PuzzleGame.action;
-import model.RandomPlayer;
-import model.Player;
 
 public class SlidingPuzzleGUI extends Application implements Observer {
 
@@ -44,7 +42,7 @@ public class SlidingPuzzleGUI extends Application implements Observer {
 		//	add your player here
 		// 	e.g. result.add(YOURPLAYER.class);
 		//#---------------------------------------------------------------#
-		result.add(RandomPlayer.class);
+		result.add(AStarPlayer.class);
 		return result;
 	}
 	

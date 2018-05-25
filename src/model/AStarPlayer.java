@@ -21,9 +21,10 @@ public class AStarPlayer extends Player{
 		PuzzleGame state= new PuzzleGame();    
 		state=priorityQueue.poll();
 		while(!state.isSolution(state.getGameBoard())){
+			state.setTotalCost(calculateNodeDepth(state));
         	action[] possibleActions= state.getPossibleActions(state.getGameBoard());
     		  for(action item:possibleActions){    			  
-    			  PuzzleGame temp= new PuzzleGame();
+    			  PuzzleGame temp= new PuzzleGame();    			  
     			  temp.setGameBoard(state.computeAction(item, state.getGameBoard()));
     			  temp.setTotalCost(state.getTotalCost()+state.getHeuristicValue(temp.getGameBoard()));    			  
     			  temp.getLog().addElement(item);
@@ -40,10 +41,19 @@ public class AStarPlayer extends Player{
 			actions.add(0, state.getLog().get(0));
 			state=state.getParentNode();					
 		}
+		System.out.println("number of total actions: "+actions.size());
+		System.out.println("performed actions: "+actions);
 		
 		return actions;
 	}
 
-	
+	public int calculateNodeDepth(PuzzleGame game) {
+		int depth=0;
+		while(game.getParentNode()!=null) {
+			depth++;
+			game=game.getParentNode();					
+		}
+		return depth;
+	}
 	
 }

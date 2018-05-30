@@ -1,24 +1,22 @@
 package model;
 
-import java.util.Arrays;
 import java.util.Observable;
 import java.util.Vector;
 
-public class PuzzleGame extends Observable  implements Comparable<PuzzleGame>{
+public class PuzzleGame extends Observable {
 
 	
 	public enum action {
 		UP, DOWN, LEFT, RIGHT;
 	} 
 
-	private PuzzleGame parentNode;
 	private Integer[][] gameBoard;
 	private int zX;
 	private int zY;
 	private Vector<action> log;
 	private boolean won;
 	private boolean wasReset;
-	private int totalCost;
+	
 	/**
 	 * Standard Constructor
 	 */
@@ -26,7 +24,7 @@ public class PuzzleGame extends Observable  implements Comparable<PuzzleGame>{
 		gameBoard = new Integer[3][3];
 		log = new Vector<>();
 		wasReset=false;
-		setTotalCost(0);
+		
 		reset();
 	}
 	
@@ -90,7 +88,6 @@ public class PuzzleGame extends Observable  implements Comparable<PuzzleGame>{
 	public void performAction(action a) {
 		gameBoard = computeAction(a, this.gameBoard);
 		log.addElement(a);
-	
 		for (int i=0; i<gameBoard.length; ++i) {
 			for(int j=0; j<gameBoard[i].length; ++j) {
 				if (gameBoard[i][j] == 0) {
@@ -180,11 +177,6 @@ public class PuzzleGame extends Observable  implements Comparable<PuzzleGame>{
 		return gameBoard;
 	}
 	
-	
-	public void setGameBoard(Integer[][] gameBoard) {
-		this.gameBoard = gameBoard;
-	}
-
 	/**
 	 * Standard getter for GUI
 	 * @return The log of performed actions.
@@ -215,17 +207,6 @@ public class PuzzleGame extends Observable  implements Comparable<PuzzleGame>{
 		makeSolutionState();
 		while (isSolution(this.gameBoard)) {
 			randomizeBoard();
-			/*this.gameBoard[0][0]=4;
-			this.gameBoard[0][1]=1;
-			this.gameBoard[0][2]=6;
-			this.gameBoard[1][0]=8;
-			this.gameBoard[1][1]=0;
-			this.gameBoard[1][2]=7;
-			this.gameBoard[2][0]=3;
-			this.gameBoard[2][1]=2;
-			this.gameBoard[2][2]=5;*/
-			
-			
 		}
 		log.clear();
 		won =false;
@@ -333,53 +314,4 @@ public class PuzzleGame extends Observable  implements Comparable<PuzzleGame>{
 	public String toString() {
 		return boardToString(gameBoard);
 	}
-
-	public PuzzleGame getParentNode() {
-		return parentNode;
-	}
-
-	public void setParentNode(PuzzleGame parentNode) {
-		this.parentNode = parentNode;
-	}
-
-	public int getTotalCost() {
-		return totalCost;
-	}
-
-	public void setTotalCost(int totalCost) {
-		this.totalCost = totalCost;
-	}
-
-	@Override
-	public int compareTo(PuzzleGame pg) {
-		if(this.totalCost>pg.totalCost)
-			return 1;
-		else if(this.totalCost == pg.totalCost)
-			return 0;
-		return -1;
-	}
-	
-	@Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + Arrays.deepHashCode(this.getGameBoard());
-        return hash;
-    }
-	
-	  @Override
-	    public boolean equals(Object obj
-	    ) {
-	        if (obj == null) {
-	            return false;
-	        }
-	        if (getClass() != obj.getClass()) {
-	            return false;
-	        }
-	        final PuzzleGame other = (PuzzleGame) obj;
-	        if (!Arrays.deepEquals(this.getGameBoard(), other.getGameBoard())) {
-	            return false;
-	        }
-	        return true;
-	    }
-
-	}
+}
